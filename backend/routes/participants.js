@@ -18,10 +18,8 @@ router.post('/', async (req, res) => {
   }
 
   const exists = await findParticipant(participantData)
-  if (exists) {
-    res.send('participant already exists in database').status(200)
-    return
-  }
+  if (exists.error) { return res.send({ message: exists.error.message }).status(418) }
+  if (exists) { return res.send('participant already exists in database').status(400) }
 
   try {
     const participant = new Participant(participantData)
@@ -39,10 +37,8 @@ router.delete('/', async (req, res) => {
   }
 
   const exists = await findParticipant(participantData)
-  if (!exists) {
-    res.send('participant not in database!').status(400)
-    return
-  }
+  if (exists.error) { return res.json({ message: exists.error.message }).status(418) }
+  if (!exists) { return res.send('participant not in database!').status(400) }
 
   try {
     const removed = await Participant.deleteMany(participantData)
@@ -52,16 +48,24 @@ router.delete('/', async (req, res) => {
   }
 })
 
-async function findParticipant (participant) {
+router.get('/:id', async (req, res) => {
   try {
-    const tmp = await Participant.find({
-      firstName: participant.firstName,
-      lastName: participant.lastName
-    })
-    return !!tmp.length
+    const participant = await Participant.findById(req.params.id)
+    res.send(participant).status(200)
   } catch (error) {
-    return error
+    res.json({ message: error.message }).status(418)
   }
+})
+
+async function findParticipant (participant) {
+  let exists
+  try {
+    const tmp = await Participant.find(participant)
+    exists = !!tmp.length
+  } catch (error) {
+    exists.error = error
+  }
+  return exists
 }
 
 export default router

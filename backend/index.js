@@ -12,11 +12,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.use('/meeting', meeting)
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError) {
+    console.error(err.message)
+    res.status(400).send({ message: err.message }) // Bad request
+    return
+  }
+  next()
+})
+
+app.use('/meetings', meeting)
 app.use('/participants', participants)
 
 app.get('/', (req, res) => {
-  res.status(200).json('asdasdsa').end()
+  res.status(200).send('Welcome :)').end()
 })
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })

@@ -8,9 +8,9 @@ const meetingSchema = {
   description: {
     type: String
   },
-  time: {
+  time: { // saved as epoch time
     required: true,
-    type: Date
+    type: Number
   },
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
