@@ -85,6 +85,22 @@ router.put('/:id', async (req, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  const id = Number.parseInt(req.params.id)
+  if (id === null) { return res.status(400).send('invalid param') }
+
+  const formatedDay = new Date(id)
+  const dayBegin = new Date(formatedDay.getFullYear(), formatedDay.getMonth(), formatedDay.getDate()).getTime()
+  const dayEnd = new Date(formatedDay.getFullYear(), formatedDay.getMonth(), formatedDay.getDate() + 1).getTime()
+
+  try {
+    const meetingsLog = await Meeting.find({ time: { $gt: dayBegin, $lt: dayEnd } })
+    res.send(meetingsLog).status(200)
+  } catch (error) {
+    res.send({ message: error.message }).status(418)
+  }
+})
+
 async function findMeeting (meetingId) {
   let exists
   try {
