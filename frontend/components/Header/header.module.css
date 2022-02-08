@@ -1,0 +1,29 @@
+.header{
+    margin: 0.5rem 3rem;
+}
+
+.h1{
+    width: 10rem;
+    text-align: center;
+}
+
+.button{
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    background-size: 2rem;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.left{
+    background-image: url(/arrow-left.svg);
+}
+
+.right{
+    background-image: url(/arrow-right.svg);
+}
+
+.button:hover{
+    background-color: rgb(230, 230, 230);
+}
