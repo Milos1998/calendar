@@ -94,7 +94,7 @@ router.get('/:id', async (req, res) => {
   const dayEnd = new Date(formatedDay.getFullYear(), formatedDay.getMonth(), formatedDay.getDate() + 1).getTime()
 
   try {
-    const meetingsLog = await Meeting.find({ time: { $gt: dayBegin, $lt: dayEnd } })
+    const meetingsLog = await Meeting.find({ time: { $gte: dayBegin, $lt: dayEnd } })
     res.send(meetingsLog).status(200)
   } catch (error) {
     res.send({ message: error.message }).status(418)
