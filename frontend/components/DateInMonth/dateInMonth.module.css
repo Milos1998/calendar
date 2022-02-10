@@ -1,4 +1,34 @@
 .date{
     background-color: khaki;
-    height: 8rem;
+    height: 9rem;
+    position: relative;
+}
+
+.notCurrent{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(83, 83, 83, 0.25);
+}
+
+.today{
+    border: solid red 0.1rem;
+}
+
+.h3{
+    display: block;
+    margin: 0.1rem 0.2rem;
+}
+
+.dots{
+    position: absolute;
+    bottom: 0;
+    height: 1.5rem;
+    width: 100%;
+    background-image: url(/dots-horizontal.svg);
+    background-repeat: no-repeat;
+    background-size: 3rem;
+    background-position: center;
 }

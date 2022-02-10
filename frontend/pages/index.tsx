@@ -1,16 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Heading from '../components/Heading'
 import DateInMonth from '../components/DateInMonth'
+import Modal from '../components/Modal'
 
 function calculateDatesInMonth(time: Date){
     let numOfWeeks= 5
     let numOfDaysInMonth= new Date(time.getFullYear(), time.getMonth()+1, 0).getDate()    
 
     let firstOfCurrentMonth= new Date(time.getFullYear(), time.getMonth(), 1)
-    let dayOfWeek= firstOfCurrentMonth.getDay() === 0 ? 7 : firstOfCurrentMonth.getDay()    //because days are 0 indexed starting from SUN for some reason
+    //because days are 0 indexed starting from SUN for some reason
+    let dayOfWeek= firstOfCurrentMonth.getDay() === 0 ? 7 : firstOfCurrentMonth.getDay()    
     //if february starts on monday than we need only 4 weeks in calendar
     if(numOfDaysInMonth % 7 === 0  &&  dayOfWeek === 1)  numOfWeeks--
     //month has 31 days and starts at least on saturday
@@ -26,22 +28,29 @@ function calculateDatesInMonth(time: Date){
       dates.push(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()))
       currentDate.setDate(currentDate.getDate() + 1)
     }
-
+        
     return dates
 }
 
 const Home: NextPage = () => {
-  const [time, useTime]= useState(new Date)
-  const [datesInMonth, useDatesInMonth]= useState(calculateDatesInMonth(time))
+  const [time, setTime]= useState(new Date)
+  const [datesInMonth, setDatesInMonth]= useState<Date[]>([])
+  const [updateDates, setUpdateDates]= useState(false)
 
+  function toggleUpdateDates() {
+    setUpdateDates(!updateDates)
+  }
   function useChangeMonth(changeTo: string){
     let newTime= new Date(time)
     if(changeTo === 'previous'){ newTime.setMonth(newTime.getMonth() - 1) }
     if(changeTo === 'next'){ newTime.setMonth(newTime.getMonth() + 1) }
-    useTime(newTime)
-    useDatesInMonth(calculateDatesInMonth(newTime))
+    setTime(newTime)
   }
 
+  useEffect(() => {
+    setDatesInMonth(calculateDatesInMonth(time))
+  }, [time, updateDates])
+//TODO use backticks for className apengind
   return (
     <div>
       <Head>
@@ -52,10 +61,11 @@ const Home: NextPage = () => {
       <Header time={time} changeMonth={useChangeMonth}/>
 
       <div className={"grid"}>
-      <Heading />
-        {datesInMonth.map((date, index) => <DateInMonth key={index} time={date}/>)}
+        <Heading />
+        {datesInMonth.map((date, index) => <DateInMonth key={index} time={date} displayedMonth={time.getMonth()} todaysDate={time.getDate()}/>)}
       </div>
 
+      <Modal updateDates={toggleUpdateDates}/>
     </div>
   )
 }
