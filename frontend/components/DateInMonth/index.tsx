@@ -44,8 +44,9 @@ const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
     return <div 
             className={`${style.date} gridItem 
             ${todaysDate === time.getDate()  &&  displayedMonth === time.getMonth() ? style.today : ""}`}
-            // onDoubleClick={() => {router.push({pathname: 'sastanak/[idSastanka]', query: {idSastanka: 1644606000000}})}}>
-            onDoubleClick={() => {router.push({pathname: 'dates/[dateId]', query: {dateId: time.getTime()}})}}>
+            onDoubleClick={(e) => {
+                // if(e.currentTarget === e.target)
+                    router.push({pathname: 'dates/[dateId]', query: {dateId: time.getTime()}})}}>
 
         <h3 className={style.h3}>{time.getDate()}</h3>
         <h3 className={`${style.plus}`} onClick={() => dispatch(displayEmptyModal(time.getTime()))}>+</h3>
@@ -62,7 +63,7 @@ const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
                 })}
                 description={task.description}/>
         })}
-        {tasks.length > 2  &&  <div className={style.dots}></div>}
+        {tasks.length > 2  &&  <div className={style.dots}  ></div>}
         <div className={displayedMonth === time.getMonth() ? "" : style.notCurrent }></div>
     </div>
 }

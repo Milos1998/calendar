@@ -15,7 +15,7 @@ interface ITaskNotParsed{
     }[]
 }
 
-const Meeting= () => {
+const DetailedDateDisplay= () => {
     const [tasks, setTasks]= useState<ITask[]>([])
     const router= useRouter()
     const { dateId }= router.query
@@ -66,4 +66,4 @@ const Meeting= () => {
     </div>
 }
 
-export default Meeting
+export default DetailedDateDisplay

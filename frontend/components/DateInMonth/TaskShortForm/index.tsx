@@ -1,6 +1,7 @@
 import style from './taskShortForm.module.css'
 import { useDispatch } from 'react-redux'
 import { displayModal } from '../../../store/slices/modalInfoSlice'
+import { useRouter } from 'next/router'
 
 interface ITask{
     title: string,
@@ -16,6 +17,7 @@ interface IParticipant{
 
 const TaskShortForm= ({title, time, participants, description}: ITask) => {
     const dispatch= useDispatch()
+    const router= useRouter()
 
     function displayFormatedTime(time: Date): string{
         let res= ''
@@ -28,7 +30,8 @@ const TaskShortForm= ({title, time, participants, description}: ITask) => {
         return res
     }
     
-    return <div className={style.task} onClick={e => {
+    return <div className={style.task}
+    onClick={e => {
         dispatch(displayModal({
             displayed: true,
             taskMode: 'view',
@@ -39,7 +42,10 @@ const TaskShortForm= ({title, time, participants, description}: ITask) => {
                 participants: participants
             }
         }))
-    }}>
+    }}
+    // onDoubleClick={() => router.push({pathname: 'sastanak/[idSastanka]', query: {idSastanka: time.getTime()}})}
+    >
+
         <h4 className={style.h4}>{title}</h4>
         <span>{displayFormatedTime(time)}</span>
     </div>

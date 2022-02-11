@@ -18,8 +18,8 @@ interface ITaskNotParsed{
 const Meeting= () => {
     const [tasks, setTasks]= useState<ITask[]>([])
     const router= useRouter()
-    const { dateId }= router.query
-    const id= Number.parseInt(dateId as string)
+    const { idSastanka }= router.query
+    const id= Number.parseInt(idSastanka as string)
     const [rerender, setRerender]= useState(false)
  
 
@@ -29,8 +29,7 @@ const Meeting= () => {
                 let res= await fetch(`${URL}/meetings/${id}`)
                 if(!res.ok) throw res
                 let newTask= ((await res.json()) as ITaskNotParsed[])
-                
-                setTasks(newTask.map(task => ({
+                let parsedTask= newTask.map(task => ({
                     taskMode: 'view',
                     taskData:{
                         title: task.title,
@@ -38,7 +37,9 @@ const Meeting= () => {
                         description: task.description,
                         participants: task.participants.map(par => ({value: par._id, label: par.firstName + " " + par.lastName}))
                     }
-                })))
+                })).filter(task => task.taskData.time === id) as ITask[]
+                
+                setTasks(parsedTask)
             } catch (error) {
                 console.error(error)
             }
@@ -47,11 +48,7 @@ const Meeting= () => {
     }, [])
 
     return <div className="dateDetailedDisplay">
-        <div className="dateDetailedDisplayHeading">
             <button className="backButton" onClick={e => {router.back()}}></button>
-            <h3>Meetings for {`${new Date(id).getDate()}-${new Date(id).getMonth()}-${new Date(id).getFullYear()}`}</h3>
-        </div>
-
     {
         tasks.map(task => (
             <Task 
