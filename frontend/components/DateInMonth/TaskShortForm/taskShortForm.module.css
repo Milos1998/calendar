@@ -2,7 +2,8 @@
     background-color: lightsalmon;
     display: block;
     margin: 0.3rem 0.4rem;
-    padding: 0.2rem
+    padding: 0.2rem;
+    cursor: pointer;
 }
 
 .h4{

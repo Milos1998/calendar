@@ -1,17 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ITask } from '../../components/Task'
 
-const initialState= {
+export interface IModalInfo extends ITask{
+    displayed: boolean,
+}
+
+const initialState: IModalInfo= {
     displayed: false,
-    time: 0
+    taskMode: 'new',
+    taskData: {
+        title: '',
+        time: 0,
+        description: '',
+        participants: []
+    }
 }
 
 export const modalInfoSlice= createSlice({
     name: 'modalInfo',
     initialState,
     reducers: {
-        displayModal: (state, action: PayloadAction<number>) => {
+        displayEmptyModal: (state, action: PayloadAction<number>) => {
+            state.taskData= {
+                title: '',
+                description: '',
+                participants: [],
+                time: action.payload
+            }
+            state.taskMode= 'new'
             state.displayed= true
-            state.time= action.payload
+        },
+        displayModal: (state, action: PayloadAction<IModalInfo>) => {
+            state.displayed= action.payload.displayed
+            state.taskData= {... action.payload.taskData}
+            state.taskMode= action.payload.taskMode
         },
         hideModal: (state) => {
             state.displayed= false
@@ -19,6 +41,6 @@ export const modalInfoSlice= createSlice({
     }
 })
 
-export const { displayModal, hideModal }= modalInfoSlice.actions
+export const { displayEmptyModal, displayModal, hideModal }= modalInfoSlice.actions
 
 export default modalInfoSlice.reducer

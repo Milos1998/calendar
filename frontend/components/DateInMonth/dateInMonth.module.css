@@ -32,3 +32,13 @@
     background-size: 3rem;
     background-position: center;
 }
+
+.plus{
+    margin: 0;
+    color: seagreen;
+    position: absolute;
+    right: 1rem;
+    top: -0.4rem;
+    font-size: 2rem;
+    cursor: pointer;
+}

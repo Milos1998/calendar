@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import style from "./dateInMonth.module.css"
-import Task from "./Task"
+import TaskShortForm from "./TaskShortForm"
 import { useDispatch } from 'react-redux' 
-import { displayModal } from '../../store/slices/modalInfoSlice'
+import { displayEmptyModal } from '../../store/slices/modalInfoSlice'
 
 interface IDateInMonth{
     time: Date,
@@ -13,6 +13,12 @@ interface IDateInMonth{
 interface ITask{
     title: string,
     time: number,
+    description: string,
+    participants: {
+        _id: string,
+        firstName: string,
+        lastName: string
+    }[]
 }
 
 const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
@@ -35,12 +41,22 @@ const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
 
     return <div 
             className={`${style.date} gridItem 
-            ${todaysDate === time.getDate()  &&  displayedMonth === time.getMonth() ? style.today : ""}`}
-            onClick={() => dispatch(displayModal(time.getTime()))}>
+            ${todaysDate === time.getDate()  &&  displayedMonth === time.getMonth() ? style.today : ""}`}>
 
         <h3 className={style.h3}>{time.getDate()}</h3>
+        <h3 className={`${style.plus}`} onClick={() => dispatch(displayEmptyModal(time.getTime()))}>+</h3>
         {tasks.sort((a, b) => a.time-b.time).slice(0, 2).map(task => {
-            return <Task key={task.time} title={task.title} time={new Date(task.time)}/>
+            return <TaskShortForm
+                key={task.time}
+                title={task.title}
+                time={new Date(task.time)}
+                participants={task.participants.map(par => {
+                    return {
+                        value: par._id,
+                        label: par.firstName + ' ' + par.lastName
+                    }
+                })}
+                description={task.description}/>
         })}
         {tasks.length > 2  &&  <div className={style.dots}></div>}
         <div className={displayedMonth === time.getMonth() ? "" : style.notCurrent }></div>

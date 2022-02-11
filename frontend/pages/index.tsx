@@ -8,6 +8,7 @@ import Modal from '../components/Modal'
 
 function calculateDatesInMonth(time: Date){
     let numOfWeeks= 5
+    //Date(x: year, y: month, 0: date) gives last day of y-1th month
     let numOfDaysInMonth= new Date(time.getFullYear(), time.getMonth()+1, 0).getDate()    
 
     let firstOfCurrentMonth= new Date(time.getFullYear(), time.getMonth(), 1)
@@ -36,10 +37,8 @@ const Home: NextPage = () => {
   const [time, setTime]= useState(new Date)
   const [datesInMonth, setDatesInMonth]= useState<Date[]>([])
   const [updateDates, setUpdateDates]= useState(false)
+  const [rerender, setRerender]= useState(false)
 
-  function toggleUpdateDates() {
-    setUpdateDates(!updateDates)
-  }
   function useChangeMonth(changeTo: string){
     let newTime= new Date(time)
     if(changeTo === 'previous'){ newTime.setMonth(newTime.getMonth() - 1) }
@@ -49,7 +48,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     setDatesInMonth(calculateDatesInMonth(time))
-  }, [time, updateDates])
+  }, [time, updateDates, rerender])
 //TODO use backticks for className apengind
   return (
     <div>
@@ -65,7 +64,7 @@ const Home: NextPage = () => {
         {datesInMonth.map((date, index) => <DateInMonth key={index} time={date} displayedMonth={time.getMonth()} todaysDate={time.getDate()}/>)}
       </div>
 
-      <Modal updateDates={toggleUpdateDates}/>
+      <Modal onAction={() => setRerender(!rerender)} />
     </div>
   )
 }

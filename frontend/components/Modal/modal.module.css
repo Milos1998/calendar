@@ -1,56 +1,12 @@
-.displayed{
+.modal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: rgba(27, 27, 27, 0.2);
-}
-
-.hidden{
-    display: none;
-}
-
-
-.form{
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 0.3rem;
-    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
-    width: 25rem;
-}
-
-.formItem{
-    margin: 0.5rem 1rem 1rem;
-    width: 100%;
-    border-radius: 0.2rem;
-}
-
-.textInput{
-    font-size: 1.3rem;
-    border: 0;
-    border-bottom: 0.1rem solid #9b9b9b;
-}
-
-.form label{
-    margin-bottom: 0;
-    color: #9b9b9b;  
-}
-
-.missingField{
-    border: red 0.1rem solid;
-}
-
-.button{
-    width: 7rem;
-    height: 3rem;
-}
-
-.submit{
-    background-color: #19821F;
-}
-
-.cancel{
-    background-color: #C11B00;
+    background-color: rgba(0, 0, 0, 0.2);
 }
