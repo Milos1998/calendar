@@ -61,7 +61,7 @@ router.put('/:id', async (req, res) => {
 
   const existsNew = await findMeeting(req.body.newId)
   if (existsNew.error) return res.send(exists.error.message).status(418)
-  if (existsNew.length > 0) return res.send('New meeting id is taken').status(400)
+  if (existsNew.length > 0 && id !== req.body.newId) return res.send('New meeting id is taken').status(400)
 
   try {
     const meetingLog = await Meeting.deleteMany({ time: id })
