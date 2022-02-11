@@ -3,6 +3,7 @@ import style from "./dateInMonth.module.css"
 import TaskShortForm from "./TaskShortForm"
 import { useDispatch } from 'react-redux' 
 import { displayEmptyModal } from '../../store/slices/modalInfoSlice'
+import { useRouter } from 'next/router'
 
 interface IDateInMonth{
     time: Date,
@@ -24,6 +25,7 @@ interface ITask{
 const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
     const [tasks, setTasks]= useState<ITask[]>([])
     const dispatch= useDispatch()
+    const router= useRouter()
 
     useEffect(() => {
         async function getMeetings(){
@@ -41,7 +43,9 @@ const DateInMonth= ({time, displayedMonth, todaysDate}: IDateInMonth) => {
 
     return <div 
             className={`${style.date} gridItem 
-            ${todaysDate === time.getDate()  &&  displayedMonth === time.getMonth() ? style.today : ""}`}>
+            ${todaysDate === time.getDate()  &&  displayedMonth === time.getMonth() ? style.today : ""}`}
+            // onDoubleClick={() => {router.push({pathname: 'sastanak/[idSastanka]', query: {idSastanka: 1644606000000}})}}>
+            onDoubleClick={() => {router.push({pathname: 'dates/[dateId]', query: {dateId: time.getTime()}})}}>
 
         <h3 className={style.h3}>{time.getDate()}</h3>
         <h3 className={`${style.plus}`} onClick={() => dispatch(displayEmptyModal(time.getTime()))}>+</h3>

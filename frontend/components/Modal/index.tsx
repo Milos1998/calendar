@@ -17,7 +17,7 @@ const Modal= ({onAction}: any) => {
                         dispatch(hideModal())
                         onAction()
                     }}
-                    onCancle= {() => dispatch(hideModal())}
+                    onCancel= {() => dispatch(hideModal())}
                     taskData={modalInfo.taskData}
                     taskMode={modalInfo.taskMode}/>
         </div>}

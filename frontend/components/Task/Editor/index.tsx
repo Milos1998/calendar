@@ -32,11 +32,11 @@ interface IEditor{
         setParticipants: Dispatch<SetStateAction<IParticipant[]>>
     },
     onAction: any,
-    onCancle: any,
+    onCancel: any,
     editorMode: 'new' | 'edit'
 }
 
-const Editor= ({titleState, descriptionState, time, participantsState, onAction, onCancle, editorMode}: IEditor) => {
+const Editor= ({titleState, descriptionState, time, participantsState, onAction, onCancel, editorMode}: IEditor) => {
     const {title, setTitle}= titleState
     const {description, setDescription}= descriptionState
     const [inputTime, setInputTime]= useState(formatTime())
@@ -173,7 +173,7 @@ const Editor= ({titleState, descriptionState, time, participantsState, onAction,
             }}
                 className={`${style.button} ${style.submit} ${style.formItem}`}
             >Save</button>
-            <button onClick={e => {onAction()}} className={`${style.button} ${style.cancel} ${style.formItem}`} >Cancel</button>
+            <button onClick={e => {onCancel()}} className={`${style.button} ${style.cancel} ${style.formItem}`} >Cancel</button>
         </div>
     </div>
 }

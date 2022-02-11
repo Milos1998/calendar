@@ -52,3 +52,29 @@ h1, h2, h3, h4, h5{
 textarea{
   resize: vertical;
 }
+
+.dateDetailedDisplay{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.backButton{
+  background: none;
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  background-size: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(/arrow-left.svg);
+}
+
+.dateDetailedDisplayHeading{
+  display: flex;
+  flex-direction: row;
+  width: 20rem;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
