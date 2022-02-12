@@ -149,7 +149,7 @@ const Editor= ({titleState, descriptionState, time, participantsState, onAction,
 
         <label className={`${style.formItem}`}>Add participants</label>
         <MultiSelect
-            className={`${style.formItem}`}
+            className= {`${style.formItem}`}
             options= {allParticipants}
             value= {participants}
             onChange= {setParticipants}

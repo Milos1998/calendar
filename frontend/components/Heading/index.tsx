@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import style from './heading.module.css'
 
 const Heading= () => {

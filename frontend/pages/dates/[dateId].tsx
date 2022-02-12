@@ -49,7 +49,7 @@ const DetailedDateDisplay= () => {
     return <div className="dateDetailedDisplay">
         <div className="dateDetailedDisplayHeading">
             <button className="backButton" onClick={e => {router.back()}}></button>
-            <h3>Meetings for {`${new Date(id).getDate()}-${new Date(id).getMonth()}-${new Date(id).getFullYear()}`}</h3>
+            <h3>Meetings for {`${new Date(id).getDate()}-${new Date(id).getMonth()+1}-${new Date(id).getFullYear()}`}</h3>
         </div>
 
     {
