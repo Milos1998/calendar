@@ -4,7 +4,7 @@ import Task from '../../components/Task'
 import { ITask } from '../../components/Task'
 import { URL } from '../../constants'
 
-interface ITaskNotParsed{
+interface ITaskAPIResponce{
     title: string,
     time: number,
     description: string,
@@ -21,14 +21,14 @@ const DetailedDateDisplay= () => {
     const { dateId }= router.query
     const id= Number.parseInt(dateId as string)
     const [rerender, setRerender]= useState(false)
- 
+
 
     useEffect(() => {
         async function getMeetings(){
             try {
                 let res= await fetch(`${URL}/meetings/${id}`)
                 if(!res.ok) throw res
-                let newTask= ((await res.json()) as ITaskNotParsed[])
+                let newTask= ((await res.json()) as ITaskAPIResponce[])
                 
                 setTasks(newTask.map(task => ({
                     taskMode: 'view',
@@ -58,7 +58,7 @@ const DetailedDateDisplay= () => {
                 taskMode={task.taskMode}
                 taskData={task.taskData}
                 onAction={() => {setRerender(!rerender)}}
-                onCancel={() => {}}
+                onCancel={() => {setRerender(!rerender)}}
                 key={task.taskData.time}
             />
         ))
